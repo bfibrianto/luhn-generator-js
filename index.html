@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Luhn Generator</title>
+</head>
+<body>
+	<input type="text" id="numberinput">
+	<button id="submit">
+	submit
+	</button>
+	<h5>
+	Inputed Number:
+	</h5>
+	<p id="number">
+
+	</p>
+	<h5>
+	Checksum Number:
+	</h5>
+	<p id="checksum">
+	 
+	</p>
+	<h5>
+	Full Number:
+	</h5>
+	<p id="full">
+
+	</p>
+	<script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		const generateChecksumv2 = (number) => {
+		  const length = number.length
+
+		  const splitNumber = number.split("")
+
+		  let sum = 0
+		  let flip = 1
+
+		  const sumTable = [
+		    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+		    [0, 2, 4, 6, 8, 1, 3, 5, 7, 9]
+		  ]
+
+		  for(let i = length -1; i >= 0; i--) {
+		    let flipIndex = flip++ % 2
+		    sum += sumTable[flipIndex][splitNumber[i]]
+		  }
+
+		  sum *= 9
+			let result = sum.toString()
+		  
+		  return result.substring(result.length-1)
+		}
+
+		$("#submit").click(function(){
+			var input = $("#numberinput").val()
+		  console.log(input)
+		  let checksum = generateChecksumv2(input)
+		  let full = input+checksum
+		  
+		  $("#number").html(input)
+		  $("#checksum").html(checksum)
+		  $("#full").html(full)
+		})
+	</script>
+</body>
+</html>
